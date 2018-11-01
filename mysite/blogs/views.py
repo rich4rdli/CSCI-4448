@@ -7,4 +7,4 @@ from django.shortcuts import render
 # Create your views here.
 
 def index(request):
-    return HttpResponse("Blogs index.")
+    return HttpResponse("Blogging website pre-alpha test!!!")
