@@ -26,8 +26,17 @@ class Posts(models.Model):
     postId = models.IntegerField(max_length=12, primary_key=True)
     postDescription = models.TextField()
     postContent = models.TextField()
+    postVotes = models.IntegerField()
 
     def __str__(self):
-        return self.postContent
+        return self.postId
 
 
+class Blogs(models.Model):
+    blogId = models.IntegerField(max_length=12, primary_key=True)
+    blogDescription = models.TextField()
+    blogContent = models.TextField()
+    blogVotes = models.IntegerField()
+
+    def __str__(self):
+        return self.blogId
