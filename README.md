@@ -5,4 +5,4 @@
 python manage.py runserver
 ```
 
-2. webpage should be up at http://127.0.0.1:8000
+2. webpage is up at http://127.0.0.1:8000/blogs/
