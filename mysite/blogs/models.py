@@ -2,41 +2,41 @@
 from __future__ import unicode_literals
 
 from django.db import models
-
+from django.contrib.auth.models import User
+from django.urls import reverse
 
 # Create your models here.
-class User(models.Model):
-    userId = models.IntegerField(max_length=12, primary_key=True)
-    userName = models.CharField(max_length=24)
-    password = models.CharField(max_length=32)
-    stars = models.IntegerField(default=0)
+
+
+class BlogPost(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    title = models.CharField(max_length=100)
+    post = models.TextField(max_length=1500)
+    date = models.DateTimeField('Publishing date', auto_now_add=True)
 
     def __str__(self):
-        return self.userId
+        return '"{title}" by {username}'.format(title=self.title, username=self.author.username)
 
 
-class Admin(User):
-    adminId = models.IntegerField(max_length=12, primary_key=True)
-
-    def __str__(self):
-        return self.adminId
-
-
-class Posts(models.Model):
-    postId = models.IntegerField(max_length=12, primary_key=True)
-    postDescription = models.TextField()
-    postContent = models.TextField()
-    postVotes = models.IntegerField()
+class BlogComment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
+    post = models.TextField(max_length=1000)
+    comment = models.ForeignKey(BlogPost, max_length=500, on_delete=models.CASCADE)
+    date = models.DateTimeField('Publishing date', auto_now_add=True)
 
     def __str__(self):
-        return self.postId
+        return '"{body}..." from {post_title} by {username}'.format(body=self.comment[:25], post_title=self.post.title,
+                                                                    username=self.author.username)
+
+    def get_absolute_url(self):
+        return reverse('blog:post', kwargs={'pk': self.pk})
 
 
-class Blogs(models.Model):
-    blogId = models.IntegerField(max_length=12, primary_key=True)
-    blogDescription = models.TextField()
-    blogContent = models.TextField()
-    blogVotes = models.IntegerField()
+class BlogAuthor(models.Model):
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+
+    def get_absolute_url(self):
+        return reverse('blogs-by-author', args=[str(self.id)])
 
     def __str__(self):
-        return self.blogId
+        return self.user.username
