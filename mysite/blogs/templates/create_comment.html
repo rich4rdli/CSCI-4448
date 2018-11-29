@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+    <form action="" method="post">
+
+        {% csrf_token %}
+
+        {% if form.body.errors %}
+            <label class="alert alert-danger">{{ form.body.errors }}</label>
+        {% endif %}
+
+        <textarea placeholder="Body"
+                  class="form-control"
+                  name="body"
+                  required>
+        </textarea>
+
+
+        <button type="submit">Save</button>
+
+    </form>
+
+{% endblock content %}
+
+
+
+
+</html>

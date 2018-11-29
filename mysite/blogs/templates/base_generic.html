@@ -1,0 +1,46 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Django Blog</title>
+
+<h1><a href="{% url 'blog:home' %}">Redium</a></h1>
+    <br>
+OO Design Blogging Website!
+<p> Welcome to this crossover project between two popular forum and blogging applications where users may write, comment and vote on posts they like! </p>
+
+</head>
+
+
+<body>
+
+<div>
+{% if not user.is_authenticated %}
+<a href="{% url 'register' %}">Sign Up</a>
+{% endif %}
+{% if not user.is_authenticated %}
+<a href="{% url 'login' %}">Login</a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'blog:user_posts' user.username %}">My Blog</a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'blog:create_post' %}">New Post</a>
+{% endif %}
+{% if user.is_authenticated %}
+<a href="{% url 'logout' %}">Sign Out</a>
+{% endif %}
+</div>
+
+{% block content %}{% endblock %}
+
+<hr>
+{% if user.is_authenticated %}
+<p class="text-center">
+Logged in as: {{ user.username }} | <a href="{% url 'logout' %}">Sign Out</a>
+</p>
+{% endif %}
+
+</body>
+</html>

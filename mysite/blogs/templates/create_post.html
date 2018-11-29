@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+
+<form action="" method="post" class="form-horizontal">
+{% csrf_token %}
+
+
+{% if form.title.errors %}
+         <label class="alert alert-danger">{{ form.title.errors }}</label>
+         {% endif %}
+
+<input type="text"
+         placeholder="Title"
+         class="form-control"
+         name="title"
+         value="{{ form.title.value|default:"" }}">
+
+
+         {% if form.body.errors %}
+         <label class="alert alert-danger">{{ form.body.errors }}</label>
+         {% endif %}
+
+         <textarea placeholder="Body"
+                    class="form-control"
+                    name="body">{{ form.body.value|default:"" }}</textarea>
+
+         <button type="submit">Save</button>
+
+
+</form>
+
+{% endblock content %}

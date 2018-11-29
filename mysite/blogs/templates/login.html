@@ -1,15 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 
-{% block title %}Login{% endblock %}
+{% extends "base_generic.html" %}
 
 {% block content %}
-<h2>Login</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login!</button>
-</form>
+
+        <form method="post" action="{% url 'login' %}" class="form-horizontal">
+            {% csrf_token %}
+
+            <input type="text"
+                   placeholder="Username"
+                   class="form-control"
+                   name="username">
+
+
+            <input type="password"
+                       placeholder="Password"
+                       class="form-control"
+                       name="password">
+
+            <input type="submit" value="Login"/>
+
+            <input type="hidden" name="next" value="{% url 'index' %}"/>
+
+        </form>
 
 {% endblock %}
 

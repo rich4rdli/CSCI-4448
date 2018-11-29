@@ -1,12 +1,13 @@
 from django.urls import path
 
-from . import views
+from blogs.views import CreateComment, index, Post, CreatePost, EditPost, DeletePost
 
 urlpatterns = [
-    path('', views.index, name='index'),
-    #path('blogs/', views.BlogListView.as_view(), name='blogs'),
-    #path('blogger/<int:pk>', views.BlogListbyAuthorView.as_view(), name='blogs-by-author'),
-    #path('blog/<int:pk>', views.BlogDetailView.as_view(), name='blog-detail'),
-    #path('bloggers/', views.BloggerListView.as_view(), name='bloggers'),
-    #path('blog/<int:pk>/comment/', views.BlogCommentCreate.as_view(), name='blog_comment'),
-]
+    path('', index, name='index'),
+    path('<str:username>', index, name='user_posts'),
+    path('blog_post/<int:pk>/', Post.as_view(), name='post'),
+    path('blog_post/create/', CreatePost.as_view(), name='create_post'),
+    path('blog_post/create/<int:pk>/update', EditPost.as_view(), name='update_post'),
+    path('blog_post/<int:pk>/delete/', DeletePost.as_view(), name='delete_post'),
+    path('blog_post/<int:pk>/comment/', CreateComment.as_view(), name='create_comment')
+    ]
